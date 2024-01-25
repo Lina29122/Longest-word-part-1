@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+void swap(char* a, int i, int j) {
+    char temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
+}
+void reverse(char* a, int start, int end) {
+    while (start < end) {
+        swap(a, start, end);
+        start++;
+        end--;
+    }
+}
+int nextPermutation(char* a, int n) {
+    int i = n - 2;
+    while (i >= 0 && a[i] >= a[i + 1])
+        i--;
+
+    if (i < 0)
+        return 0;
+
+    int j = n - 1;
+    while (a[j] <= a[i])
+        j--;
+
+    swap(a, i, j);
+    reverse(a, i + 1, n - 1);
+
+    return 1;
+}
+
+int main() {
+    char drawn_letters[] = "ABCDEFGHIJ"; 
+    int n = strlen(drawn_letters);
+
+    printf("Combinations of 10 letters:\n");
+    printf("%s\n", drawn_letters);
+    while (nextPermutation(drawn_letters, n)) {
+        printf("%s\n", drawn_letters);
+    }
+
+    return 0;
+}
